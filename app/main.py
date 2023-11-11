@@ -26,8 +26,6 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
         current_time = floor(time())
 
     print()  # prints a nl under prog bar
-    bpm.sort()
-    delta.sort()
     normalise_list_data(bpm)
     normalise_list_data(delta)
     return bpm, delta
