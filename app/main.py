@@ -4,6 +4,7 @@ from math import floor
 
 from print_progress_bar import print_progress_bar
 from normalise_list_data import normalise_list_data
+from rmssd import get_rmssd_score
 
 MEDITATION_TIME = 180
 
@@ -22,8 +23,9 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
             bpm.append(float(decoded_value[decoded_value.find('=') + 1:]))
         elif decoded_value:
             delta.append(int(decoded_value))
-        print_progress_bar(iteration=((end_time - current_time / MEDITATION_TIME) * 100))
+        print_progress_bar(iteration=((end_time - current_time) / MEDITATION_TIME) * 100)
         current_time = floor(time())
+        # test = get_rmssd_score(delta)
 
     print()  # prints a nl under prog bar
     normalise_list_data(bpm)
