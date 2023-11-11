@@ -5,8 +5,16 @@ from math import floor
 MEDITATION_TIME = 180
 
 
+def normalise_list_data(my_data: list, outlier_count: int = 3) -> None:
+    if len(my_data) < 10:
+        return
+    for _ in range(outlier_count):
+        my_data.remove(max(my_data))
+        my_data.remove(min(my_data))
+
+
 def print_progress_bar(iteration, total=100, prefix='Progress:', suffix='Complete', decimals=1, length=100, fill='█',
-                       print_end="\r"):
+                       print_end="\r") -> None:
     """
     Call in a loop to create terminal progress bar
     @params:
@@ -23,7 +31,7 @@ def print_progress_bar(iteration, total=100, prefix='Progress:', suffix='Complet
     print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=print_end)
 
 
-def meditation_control(arduino: Serial):
+def meditation_control(arduino: Serial) -> tuple[list, list]:
     bpm = []
     delta = []
     current_time = time()
@@ -43,10 +51,14 @@ def meditation_control(arduino: Serial):
         #print(bpm)
         #print(delta)
     print()  # prints a nl under prog bar
+    print(bpm.sort())
+    print(delta.sort())
+    normalise_list_data(bpm)
+    normalise_list_data(delta)
     return bpm, delta
 
 
-def app_control(arduino: Serial):
+def app_control(arduino: Serial) -> None:
     # start meditating?
     print("psssst... hey, hey you, hey kid. You wanna start meditating?")
 
