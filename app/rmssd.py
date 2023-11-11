@@ -7,7 +7,7 @@ def get_rmssd_score(deltas: list) -> float:
         return 0
     squares = []
     for i in range(len(deltas)):
-        squares.append(deltas[i]**2)
+        squares.append(deltas[i] ** 2)
     mean = sum(squares) / len(squares)
     root = math.sqrt(mean)
     score = math.log(root)

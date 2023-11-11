@@ -39,7 +39,7 @@ def app_control(arduino: Serial) -> None:
         response = input("psssst... hey, hey you, hey kid. You wanna start meditating? (yes / no): ")
         if response.lower() in ("y", "yes"):
             bpm, delta = meditation_control(arduino)
-            print(bpm)
+            print(f"Average BPM = {sum(bpm) / len(bpm)}")
             print(delta)
         elif response.lower() in ("n", "no"):
             return
