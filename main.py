@@ -1,12 +1,13 @@
 from serial import Serial
 from time import time
 
+MEDITATION_TIME = 180
 
 def meditation_control(arduino: Serial):
     bpm = []
     delta = []
     current_time = time()
-    end_time = current_time + 180
+    end_time = current_time + MEDITATION_TIME
 
     while time() < end_time:
         value = arduino.readline()
