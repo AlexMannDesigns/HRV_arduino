@@ -36,7 +36,7 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
 def app_control(arduino: Serial) -> None:
     # start meditating?
     while True:
-        response = input("psssst... hey, hey you, hey kid. You wanna start meditating? (yes / no)")
+        response = input("psssst... hey, hey you, hey kid. You wanna start meditating? (yes / no): ")
         if response.lower() in ("y", "yes"):
             bpm, delta = meditation_control(arduino)
             print(bpm)
