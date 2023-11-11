@@ -14,7 +14,7 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
     current_time = time()
     end_time = floor(current_time + MEDITATION_TIME)
 
-    while floor(time()) < end_time:
+    while current_time < end_time:
         value = arduino.readline()
         decoded_value = value.decode("utf-8").rstrip()
 
@@ -22,7 +22,9 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
             bpm.append(float(decoded_value[decoded_value.find('=') + 1:]))
         elif decoded_value:
             delta.append(int(decoded_value))
-        print_progress_bar(iteration=((end_time - floor(time())) / MEDITATION_TIME) * 100)
+        print_progress_bar(iteration=((end_time - current_time / MEDITATION_TIME) * 100))
+        current_time = floor(time())
+
     print()  # prints a nl under prog bar
     bpm.sort()
     delta.sort()
