@@ -6,6 +6,8 @@ from print_progress_bar import print_progress_bar
 from normalise_list_data import normalise_list_data
 from rmssd import get_rmssd_score
 from blob import BLOB
+from coin_ascii_art import COIN
+from pomppi_blobbi_ascii import TITLE
 
 MEDITATION_TIME = 180
 
@@ -34,7 +36,7 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
 
 
 def app_control(arduino: Serial) -> None:
-    # title
+    print(TITLE)
     while True:
         print(BLOB)
         response = input("Would you like to start meditating? (yes / no): ")
@@ -44,6 +46,7 @@ def app_control(arduino: Serial) -> None:
                 print(f"LOG: Average BPM = {floor(sum(bpm) / len(bpm))}")
             print("LOG: RMSSD Score = ", get_rmssd_score(delta))
             # reward =
+            print(COIN)
         elif response.lower() in ("n", "no"):
             print("Goodbye!")
             return
