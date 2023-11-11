@@ -1,22 +1,27 @@
 from serial import Serial
+
 #import time
 
 
-def control():
-    port = "/dev/cu.usbmodem11201"
-    arduino = Serial(port=port, baudrate=115200, timeout=.1)
+def control(arduino: Serial):
+    bpm = []
+    delta = []
 
-    #bpm = []
-    #delta = []
     while True:
         value = arduino.readline()
-        print(value.decode("utf-8"))  # printing the value
-        decoded_value = value.decode("utf-8")
+        decoded_value = value.decode("utf-8").rstrip()
+
         if decoded_value.startswith("BPM"):
             print(decoded_value)
-        else:
-            print(int(decoded_value))
+            bpm.append(float(decoded_value[decoded_value.find('=') + 1:]))
+        elif decoded_value:
+            print(decoded_value)
+            delta.append(int(decoded_value))
+
+        print(bpm)
+        print(delta)
 
 
 if __name__ == "__main__":
-    control()
+    port = "/dev/cu.usbmodem11201"
+    control(Serial(port=port, baudrate=115200, timeout=.1))
