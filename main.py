@@ -1,5 +1,6 @@
 from serial import Serial
 from time import time
+from math import floor
 
 MEDITATION_TIME = 180
 
@@ -16,8 +17,8 @@ def print_progress_bar(iteration, total=100, prefix='Progress:', suffix='Complet
         fill        - Optional  : bar fill character (Str)
         printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
     """
-    percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-    filled_length = int(length * iteration // total)
+    percent = ("{0:." + str(decimals) + "f}").format(100 - (100 * (iteration / float(total))))
+    filled_length = 100 - int(length * iteration // total)
     bar = fill * filled_length + '-' * (length - filled_length)
     print(f'\r{prefix} |{bar}| {percent}% {suffix}', end=print_end)
 
@@ -26,9 +27,9 @@ def meditation_control(arduino: Serial):
     bpm = []
     delta = []
     current_time = time()
-    end_time = current_time + MEDITATION_TIME
+    end_time = floor(current_time + MEDITATION_TIME)
 
-    while time() < end_time:
+    while floor(time()) < end_time:
         value = arduino.readline()
         decoded_value = value.decode("utf-8").rstrip()
 
@@ -38,7 +39,7 @@ def meditation_control(arduino: Serial):
         elif decoded_value:
             #print(decoded_value)
             delta.append(int(decoded_value))
-        print_progress_bar(iteration=((end_time - time()) / MEDITATION_TIME) * 100)
+        print_progress_bar(iteration=((end_time - floor(time())) / MEDITATION_TIME) * 100)
         #print(bpm)
         #print(delta)
     print()  # prints a nl under prog bar
