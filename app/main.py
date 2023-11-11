@@ -46,6 +46,7 @@ def app_control(arduino: Serial) -> None:
                 print(f"Average BPM = {floor(sum(bpm) / len(bpm))}")
             print(delta)
         elif response.lower() in ("n", "no"):
+            print("Goodbye!")
             return
 
 
