@@ -5,6 +5,7 @@ from math import floor
 from print_progress_bar import print_progress_bar
 from normalise_list_data import normalise_list_data
 from rmssd import get_rmssd_score
+from blob import BLOB
 
 MEDITATION_TIME = 180
 
@@ -37,7 +38,8 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
 def app_control(arduino: Serial) -> None:
     # start meditating?
     while True:
-        response = input("psssst... hey, hey you, hey kid. You wanna start meditating? (yes / no): ")
+        print(BLOB)
+        response = input("Would you like to start meditating? (yes / no): ")
         if response.lower() in ("y", "yes"):
             bpm, delta = meditation_control(arduino)
             if len(bpm):
