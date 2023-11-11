@@ -23,9 +23,10 @@ def meditation_control(arduino: Serial) -> tuple[list, list]:
             bpm.append(float(decoded_value[decoded_value.find('=') + 1:]))
         elif decoded_value:
             delta.append(int(decoded_value))
-        print_progress_bar(iteration=((end_time - current_time) / MEDITATION_TIME) * 100)
         current_time = floor(time())
+        print_progress_bar(iteration=((end_time - current_time) / MEDITATION_TIME) * 100)
         # test = get_rmssd_score(delta)
+    #print_progress_bar(100)
 
     print()  # prints a nl under prog bar
     normalise_list_data(bpm)
@@ -39,7 +40,8 @@ def app_control(arduino: Serial) -> None:
         response = input("psssst... hey, hey you, hey kid. You wanna start meditating? (yes / no): ")
         if response.lower() in ("y", "yes"):
             bpm, delta = meditation_control(arduino)
-            print(f"Average BPM = {sum(bpm) / len(bpm)}")
+            if len(bpm):
+                print(f"Average BPM = {floor(sum(bpm) / len(bpm))}")
             print(delta)
         elif response.lower() in ("n", "no"):
             return
