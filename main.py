@@ -1,13 +1,14 @@
 from serial import Serial
+from time import time
 
-#import time
 
-
-def control(arduino: Serial):
+def meditation_control(arduino: Serial):
     bpm = []
     delta = []
+    current_time = time()
+    end_time = current_time + 180
 
-    while True:
+    while time() < end_time:
         value = arduino.readline()
         decoded_value = value.decode("utf-8").rstrip()
 
@@ -20,6 +21,14 @@ def control(arduino: Serial):
 
         print(bpm)
         print(delta)
+
+    return bpm, delta
+
+
+def control(arduino: Serial):
+    # start meditating?
+
+    bpm, delta = meditation_control(arduino)
 
 
 if __name__ == "__main__":
